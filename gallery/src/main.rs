@@ -54,7 +54,9 @@ async fn home() -> Result<impl View> {
                         "Hover the charts, or Tab through the radar's axes."
                     </p>
                 </header>
-                <main class="grid lg:grid-cols-2 gap-px bg-base-300 border-y border-base-300">
+                <main
+                    class="grid lg:grid-cols-2 gap-px bg-base-300 border-y border-base-300"
+                >
                     themed(theme: "light")
                     themed(theme: "dark")
                 </main>
@@ -90,7 +92,9 @@ async fn themed(theme: &str) -> Result<impl View> {
     let (offices, pair) = (format!("offices-{theme}"), format!("pair-{theme}"));
     Ok(view! {
         <section data-theme=(theme) class="bg-base-100 text-base-content p-6 space-y-6">
-            <p class="text-xs uppercase tracking-widest text-base-content/50">(theme)</p>
+            <p class="text-xs uppercase tracking-widest text-base-content/50">
+                (theme)
+            </p>
             demo(
                 title: "time_chart · bars",
                 note: "Last 30 days. The last day is still filling, so it is lighter.",
@@ -100,7 +104,7 @@ async fn themed(theme: &str) -> Result<impl View> {
                     back_name: "Pageviews",
                     shown: Some(30),
                     partial: true,
-                    partial_label: "so far",
+                    partial_label: "so far"
                 )
             )
             demo(
@@ -113,23 +117,22 @@ async fn themed(theme: &str) -> Result<impl View> {
                     style: ChartStyle::Line,
                     shown: Some(15),
                     partial: true,
-                    partial_label: "so far",
+                    partial_label: "so far"
                 )
             )
             demo(
                 title: "time_chart · months",
                 note: "Last 12 months, all complete.",
-                time_chart(points: &monthly, front_name: "Visitors", back_name: "Pageviews")
+                time_chart(
+                    points: &monthly,
+                    front_name: "Visitors",
+                    back_name: "Pageviews"
+                )
             )
             demo(
                 title: "radar_chart",
                 note: "Lisbon compared with three cities. Switch them with the tabs.",
-                radar_chart(
-                    id: &offices,
-                    axes: &axes,
-                    base: &lisbon,
-                    others: &cities,
-                )
+                radar_chart(id: &offices, axes: &axes, base: &lisbon, others: &cities)
             )
             demo(
                 title: "radar_chart · one comparison",
@@ -138,7 +141,7 @@ async fn themed(theme: &str) -> Result<impl View> {
                     id: &pair,
                     axes: &axes[..5],
                     base: &lisbon,
-                    others: &cities[..1],
+                    others: &cities[..1]
                 )
             )
         </section>

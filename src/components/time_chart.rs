@@ -158,7 +158,9 @@ pub async fn time_chart(
                 </span>
             </div>
             <div class="flex gap-3">
-                <div class="relative w-8 shrink-0 h-48 sm:h-56 text-xs text-base-content/50 tabular-nums">
+                <div
+                    class="relative w-8 shrink-0 h-48 sm:h-56 text-xs text-base-content/50 tabular-nums"
+                >
                     for tick in &y_ticks {
                         <span
                             class="absolute right-0 translate-y-1/2"
@@ -202,7 +204,11 @@ pub async fn time_chart(
                                     y=(format!("{front_y:.1}"))
                                     width=(format!("{width:.1}"))
                                     height=(format!("{:.1}", H - front_y))
-                                    class=(if *filling { "fill-base-content/45" } else { "fill-base-content" })
+                                    class=(if *filling {
+                                        "fill-base-content/45"
+                                    } else {
+                                        "fill-base-content"
+                                    })
                                 ></rect>
                             }
                             if !bars {
@@ -237,7 +243,9 @@ pub async fn time_chart(
                             if let Some(back_bottom) = back_bottom {
                                 <span
                                     class="absolute size-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-base-content/35"
-                                    style=(format!("left: {left:.2}%; bottom: {back_bottom:.2}%"))
+                                    style=(format!(
+                                        "left: {left:.2}%; bottom: {back_bottom:.2}%",
+                                    ))
                                 ></span>
                             }
                             <span
@@ -258,9 +266,13 @@ pub async fn time_chart(
                                 <div class="group relative flex-1">
                                     if i < shown {
                                         if bars {
-                                            <span class="absolute inset-0 rounded-sm bg-base-content/5 hidden group-hover:block"></span>
+                                            <span
+                                                class="absolute inset-0 rounded-sm bg-base-content/5 hidden group-hover:block"
+                                            ></span>
                                         } else {
-                                            <span class="absolute inset-y-0 left-1/2 w-px bg-base-content/30 hidden group-hover:block"></span>
+                                            <span
+                                                class="absolute inset-y-0 left-1/2 w-px bg-base-content/30 hidden group-hover:block"
+                                            ></span>
                                             <span
                                                 class="absolute left-1/2 size-2.5 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-base-content bg-base-200 hidden group-hover:block"
                                                 style=(format!("bottom: {pct:.2}%"))
@@ -283,7 +295,9 @@ pub async fn time_chart(
                                             <div class="font-medium tabular-nums text-sm">
                                                 (fmt_int(p.front))
                                                 " "
-                                                <span class="font-normal text-base-content/60">(front_name)</span>
+                                                <span class="font-normal text-base-content/60">
+                                                    (front_name)
+                                                </span>
                                             </div>
                                             <div class="tabular-nums text-base-content/60">
                                                 (fmt_int(p.back))
@@ -296,11 +310,19 @@ pub async fn time_chart(
                             }
                         </div>
                     </div>
-                    <div class="relative h-5 mt-2 text-xs text-base-content/50 tabular-nums">
-                        for (i, p) in points.iter().enumerate().filter(|(i, _)| i % every == 0) {
+                    <div
+                        class="relative h-5 mt-2 text-xs text-base-content/50 tabular-nums"
+                    >
+                        for (i, p) in points
+                            .iter()
+                            .enumerate()
+                            .filter(|(i, _)| i % every == 0) {
                             <span
                                 class="absolute -translate-x-1/2 whitespace-nowrap"
-                                style=(format!("left: {:.2}%", (i as f64 + 0.5) / n as f64 * 100.0))
+                                style=(format!(
+                                    "left: {:.2}%",
+                                    (i as f64 + 0.5) / n as f64 * 100.0,
+                                ))
                             >
                                 (&p.label)
                             </span>

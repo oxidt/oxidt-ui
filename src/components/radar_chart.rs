@@ -83,10 +83,19 @@ pub async fn radar_chart(
                 </div>
             }
             <svg
-                viewBox=(format!("{} {} {} {}", -HALF_W, -HALF_H, 2.0 * HALF_W, 2.0 * HALF_H))
+                viewBox=(format!(
+                    "{} {} {} {}",
+                    -HALF_W,
+                    -HALF_H,
+                    2.0 * HALF_W,
+                    2.0 * HALF_H,
+                ))
                 class="radar-svg"
                 role="group"
-                aria-label=(std::iter::once(base.name.as_str()).chain(others.iter().map(|o| o.name.as_str())).collect::<Vec<_>>().join(" / "))
+                aria-label=(std::iter::once(base.name.as_str())
+                    .chain(others.iter().map(|o| o.name.as_str()))
+                    .collect::<Vec<_>>()
+                    .join(" / "))
             >
                 <g aria-hidden="true">
                     for f in [0.25, 0.5, 0.75, 1.0] {
@@ -94,14 +103,26 @@ pub async fn radar_chart(
                     }
                     for i in 0..n {
                         let (x, y) = point(i, R);
-                        <line x1="0" y1="0" x2=(format!("{x:.1}")) y2=(format!("{y:.1}")) class="radar-grid"></line>
+                        <line
+                            x1="0"
+                            y1="0"
+                            x2=(format!("{x:.1}"))
+                            y2=(format!("{y:.1}"))
+                            class="radar-grid"
+                        ></line>
                     }
                     for (i, axis) in axes.iter().enumerate() {
                         let (x, y) = point(i, R * 1.16);
                         <text
                             x=(format!("{x:.1}"))
                             y=(format!("{:.1}", y + 3.5))
-                            text-anchor=(if x.abs() < 1.0 { "middle" } else if x > 0.0 { "start" } else { "end" })
+                            text-anchor=(if x.abs() < 1.0 {
+                                "middle"
+                            } else if x > 0.0 {
+                                "start"
+                            } else {
+                                "end"
+                            })
                             class="radar-label"
                         >
                             (*axis)
@@ -118,12 +139,21 @@ pub async fn radar_chart(
                 for (i, axis) in axes.iter().enumerate() {
                     let a = value_of(base, i);
                     let (ax, ay) = point(i, scaled(a));
-                    let (wx1, wy1) = (R * 1.3 * (angle(i) - TAU / n as f64 / 2.0).cos(), R * 1.3 * (angle(i) - TAU / n as f64 / 2.0).sin());
-                    let (wx2, wy2) = (R * 1.3 * (angle(i) + TAU / n as f64 / 2.0).cos(), R * 1.3 * (angle(i) + TAU / n as f64 / 2.0).sin());
+                    let (wx1, wy1) = (
+                        R * 1.3 * (angle(i) - TAU / n as f64 / 2.0).cos(),
+                        R * 1.3 * (angle(i) - TAU / n as f64 / 2.0).sin(),
+                    );
+                    let (wx2, wy2) = (
+                        R * 1.3 * (angle(i) + TAU / n as f64 / 2.0).cos(),
+                        R * 1.3 * (angle(i) + TAU / n as f64 / 2.0).sin(),
+                    );
                     let (sx, sy) = point(i, R);
                     let rows = 1 + others.len().min(1);
                     let (tw, th) = (118.0, 18.0 + 14.0 * rows as f64);
-                    let tx = (if ax >= 0.0 { ax + 10.0 } else { ax - 10.0 - tw }).clamp(-HALF_W, HALF_W - tw);
+                    let tx = (if ax >= 0.0 { ax + 10.0 } else { ax - 10.0 - tw }).clamp(
+                        -HALF_W,
+                        HALF_W - tw,
+                    );
                     let ty = (ay - th / 2.0).clamp(-HALF_H, HALF_H - th);
                     <g
                         class="radar-axis"
@@ -132,13 +162,30 @@ pub async fn radar_chart(
                             "{axis}: {} {}{}",
                             base.name,
                             fmt(a),
-                            others.iter().map(|o| format!(", {} {}", o.name, fmt(value_of(o, i)))).collect::<String>(),
+                            others
+                                .iter()
+                                .map(|o| format!(", {} {}", o.name, fmt(value_of(o, i))))
+                                .collect::<String>(),
                         ))
                     >
-                        <polygon points=(format!("0,0 {wx1:.1},{wy1:.1} {wx2:.1},{wy2:.1}")) class="radar-hit"></polygon>
+                        <polygon
+                            points=(format!("0,0 {wx1:.1},{wy1:.1} {wx2:.1},{wy2:.1}"))
+                            class="radar-hit"
+                        ></polygon>
                         <g class="radar-focus" aria-hidden="true">
-                            <line x1="0" y1="0" x2=(format!("{sx:.1}")) y2=(format!("{sy:.1}")) class="radar-spoke"></line>
-                            <circle cx=(format!("{ax:.1}")) cy=(format!("{ay:.1}")) r="3.5" class="radar-dot radar-a"></circle>
+                            <line
+                                x1="0"
+                                y1="0"
+                                x2=(format!("{sx:.1}"))
+                                y2=(format!("{sy:.1}"))
+                                class="radar-spoke"
+                            ></line>
+                            <circle
+                                cx=(format!("{ax:.1}"))
+                                cy=(format!("{ay:.1}"))
+                                r="3.5"
+                                class="radar-dot radar-a"
+                            ></circle>
                             for (k, other) in others.iter().enumerate() {
                                 let (bx, by) = point(i, scaled(value_of(other, i)));
                                 <circle
@@ -148,19 +195,59 @@ pub async fn radar_chart(
                                     class=(format!("radar-dot radar-b radar-only-{}", k + 1))
                                 ></circle>
                             }
-                            <g class="radar-tip" transform=(format!("translate({tx:.1} {ty:.1})"))>
+                            <g
+                                class="radar-tip"
+                                transform=(format!("translate({tx:.1} {ty:.1})"))
+                            >
                                 <rect width=(tw) height=(th) rx="6" class="radar-tip-box"></rect>
                                 <text x="9" y="13" class="radar-tip-title">(*axis)</text>
-                                <line x1="9" x2="19" y1="24" y2="24" class="radar-key radar-a"></line>
-                                <text x="24" y="27" class="radar-tip-text">(&base.name)</text>
-                                <text x="86" y="27" text-anchor="end" class="radar-tip-value">(fmt(a))</text>
+                                <line
+                                    x1="9"
+                                    x2="19"
+                                    y1="24"
+                                    y2="24"
+                                    class="radar-key radar-a"
+                                ></line>
+                                <text x="24" y="27" class="radar-tip-text">
+                                    (&base.name)
+                                </text>
+                                <text
+                                    x="86"
+                                    y="27"
+                                    text-anchor="end"
+                                    class="radar-tip-value"
+                                >
+                                    (fmt(a))
+                                </text>
                                 for (k, other) in others.iter().enumerate() {
                                     let b = value_of(other, i);
                                     <g class=(format!("radar-only-{}", k + 1))>
-                                        <line x1="9" x2="19" y1="38" y2="38" class="radar-key radar-b"></line>
-                                        <text x="24" y="41" class="radar-tip-text">(&other.name)</text>
-                                        <text x="86" y="41" text-anchor="end" class="radar-tip-value">(fmt(b))</text>
-                                        <text x="110" y="41" text-anchor="end" class="radar-tip-delta">(delta(b - a))</text>
+                                        <line
+                                            x1="9"
+                                            x2="19"
+                                            y1="38"
+                                            y2="38"
+                                            class="radar-key radar-b"
+                                        ></line>
+                                        <text x="24" y="41" class="radar-tip-text">
+                                            (&other.name)
+                                        </text>
+                                        <text
+                                            x="86"
+                                            y="41"
+                                            text-anchor="end"
+                                            class="radar-tip-value"
+                                        >
+                                            (fmt(b))
+                                        </text>
+                                        <text
+                                            x="110"
+                                            y="41"
+                                            text-anchor="end"
+                                            class="radar-tip-delta"
+                                        >
+                                            (delta(b - a))
+                                        </text>
                                     </g>
                                 }
                             </g>
@@ -169,7 +256,10 @@ pub async fn radar_chart(
                 }
             </svg>
             <div class="radar-legend" aria-hidden="true">
-                <span><i class="radar-swatch radar-a"></i>(&base.name)</span>
+                <span>
+                    <i class="radar-swatch radar-a"></i>
+                    (&base.name)
+                </span>
                 for (k, other) in others.iter().enumerate() {
                     <span class=(format!("radar-only-{}", k + 1))>
                         <i class="radar-swatch radar-b"></i>

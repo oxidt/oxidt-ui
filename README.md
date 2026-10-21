@@ -49,7 +49,7 @@ Overlays need no script in current browsers:
 ```toml
 [dependencies]
 topcoat = { version = "=0.10.0", features = ["ui", "tailwind"] }
-oxidt-ui = { git = "https://github.com/oxidt/oxidt-ui", tag = "v0.1.7" }
+oxidt-ui = { git = "https://github.com/oxidt/oxidt-ui", tag = "v0.1.8" }
 
 [build-dependencies]
 topcoat = { version = "=0.10.0", default-features = false, features = ["tailwind"] }
@@ -143,7 +143,7 @@ compose.
 ## Develop
 
 ```sh
-just check                                  # clippy + compile the components
+just check                                  # topcoat fmt, clippy, component tests
 TAILWIND=/path/to/tailwindcss just showcase # build tests/fixture/out/showcase.html
 TAILWIND=/path/to/tailwindcss just browser-test # browser regression checks
 just gallery                                # the components with sample data

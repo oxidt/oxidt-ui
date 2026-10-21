@@ -33,7 +33,9 @@ pub async fn empty_state(
             (attrs)
         >
             <h3 class="font-serif text-xl">(title)</h3>
-            <div class="flex max-w-sm flex-col items-center gap-4 text-sm text-base-content/60">
+            <div
+                class="flex max-w-sm flex-col items-center gap-4 text-sm text-base-content/60"
+            >
                 (child)
             </div>
         </div>

@@ -18,7 +18,7 @@ on those classes.
     `admin-shell`, `table-wrap`, `table-polished`, `empty-state`,
     `modal-polished`, `auth-bg`, `auth-card`, `btn-strong`, motion
 - `src/components/*.rs`: registry components that Topcoat's built-in registry
-  lacks: bar_chart, empty_state, modal, popover, radar_chart, toast. For buttons, cards, inputs and the
+  lacks: empty_state, modal, popover, radar_chart, time_chart, toast. For buttons, cards, inputs and the
   like, write the classes directly (`<button class="btn btn-primary">`) or keep
   an app's own wrappers.
 
@@ -34,8 +34,9 @@ Overlays need no script in current browsers:
 - **popover:** the Popover API. `popover_trigger` toggles it, Escape and outside
   clicks close it, and CSS anchor positioning puts it under the trigger.
   Browsers without anchor positioning centre it instead.
-- **bar_chart, radar_chart:** server-rendered SVG that follows the theme
-  tokens. Bar tooltips are native `<title>`s. The radar switches comparisons
+- **time_chart, radar_chart:** server-rendered SVG that follows the theme
+  tokens. `time_chart` draws two counts over time as bars or a line, with a
+  y-axis, a lighter still-filling bucket and CSS-only hover tooltips. The radar switches comparisons
   with radio tabs (up to 6) and shows a tooltip per axis on hover or keyboard
   focus. A radar with 6 axes and 4 profiles is about 14 KB of HTML, 1.6 KB
   gzipped.
@@ -48,7 +49,7 @@ Overlays need no script in current browsers:
 ```toml
 [dependencies]
 topcoat = { version = "=0.10.0", features = ["ui", "tailwind"] }
-oxidt-ui = { git = "https://github.com/oxidt/oxidt-ui", tag = "v0.1.6" }
+oxidt-ui = { git = "https://github.com/oxidt/oxidt-ui", tag = "v0.1.7" }
 
 [build-dependencies]
 topcoat = { version = "=0.10.0", default-features = false, features = ["tailwind"] }
@@ -145,7 +146,12 @@ compose.
 just check                                  # clippy + compile the components
 TAILWIND=/path/to/tailwindcss just showcase # build tests/fixture/out/showcase.html
 TAILWIND=/path/to/tailwindcss just browser-test # browser regression checks
+just gallery                                # the components with sample data
 ```
+
+`just gallery` serves `gallery/` at http://127.0.0.1:3100: every chart with
+sample data, light and dark side by side. It compiles the components straight
+from `src/components`, so it always shows the current code.
 
 `just browser-test` compiles `bench/fixture/checks.html` with the given
 Tailwind and checks it in Chromium (`bench/checks.test.ts`): one test per bug

@@ -1,0 +1,17 @@
+[package]
+name = "oxidt-ui-gallery"
+version = "0.0.0"
+edition = "2024"
+publish = false
+description = "A local page that renders oxidt-ui's components with sample data"
+
+# Its own workspace, so the gallery's dependencies stay out of apps that
+# depend on oxidt-ui.
+[workspace]
+
+[dependencies]
+topcoat = { version = "=0.10.0", features = ["tailwind"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+
+[build-dependencies]
+topcoat = { version = "=0.10.0", default-features = false, features = ["tailwind"] }

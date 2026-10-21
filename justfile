@@ -29,3 +29,7 @@ bench-diff before after *args:
 browser-test:
     cd bench && bun install --frozen-lockfile --silent && bunx playwright install chromium
     cd bench && TAILWIND="{{tailwind}}" bun test
+
+# Serve the component gallery (charts with sample data) at http://127.0.0.1:3100.
+gallery:
+    cd gallery && PORT=3100 topcoat dev

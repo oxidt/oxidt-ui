@@ -1,0 +1,46 @@
+<!doctype html><html data-theme="dark"><head><meta charset="utf-8"><link rel="stylesheet" href="/checks.css"></head>
+<body class="p-8">
+<button id="neutral-outline" class="btn btn-neutral btn-outline">Neutral outline</button>
+<span id="neutral-soft" class="badge badge-neutral badge-soft">Neutral soft</span>
+<button id="neutral-soft-btn" class="btn btn-neutral btn-soft">Neutral soft btn</button>
+<span id="neutral-ghost" class="btn btn-neutral btn-ghost">ghost</span>
+<span id="neutral-outline-badge" class="badge badge-neutral badge-outline">x</span>
+
+<section data-theme="light" id="nested-light" class="bg-base-100 p-4">
+  <p id="nested-text" class="text-base-content dark:text-error">nested light</p>
+</section>
+<p id="dark-text" class="dark:text-error">dark text</p>
+
+<div id="join" class="join join-vertical lg:join-horizontal">
+  <button class="btn join-item">A</button><button class="btn join-item">B</button><button class="btn join-item">C</button>
+</div>
+
+<div id="collapse" class="collapse collapse-arrow border border-base-300">
+  <input id="collapse-input" type="checkbox"><div class="collapse-title">Title</div><div class="collapse-content">Body</div>
+</div>
+
+<span class="loading loading-lg"></span><input id="indet" type="checkbox" class="checkbox">
+<input id="checked" type="checkbox" class="checkbox" checked>
+
+<div class="toast toast-end" id="toaster">
+  <div id="t-error" class="alert alert-error toast-enter">Error stays</div>
+  <div id="t-1" class="alert alert-success toast-auto" style="--toast-delay:0s">ok 1</div>
+  <div id="t-2" class="alert alert-success toast-auto" style="--toast-delay:0s">ok 2</div>
+</div>
+
+<div style="margin-top:400px;margin-left:600px">
+<button id="pop-trigger" class="btn" popovertarget="pop" style="anchor-name: --pop">Options</button>
+</div>
+<div id="pop" popover="auto" class="popover popover-top popover-end" style="position-anchor: --pop; width: 200px">menu</div>
+<div id="pop2" popover="auto" class="popover">centred</div>
+
+<dialog id="m" class="modal"><div class="modal-box">
+  <form id="edit"><input name="x" required>
+    <button id="cancel" type="button" commandfor="m" command="close" onclick="if(!('commandForElement' in HTMLButtonElement.prototype))document.getElementById(this.getAttribute('commandfor')).close()">Cancel</button>
+    <button id="save" type="submit">Save</button>
+  </form></div></dialog>
+<button id="open-m" type="button" commandfor="m" command="show-modal" onclick="if(!('commandForElement' in HTMLButtonElement.prototype))document.getElementById(this.getAttribute('commandfor')).showModal()">Open</button>
+
+<dialog id="m2" class="modal"><div class="modal-box"><button id="inside">x</button></div></dialog>
+<script>document.currentScript.previousElementSibling.showModal()</script>
+</body></html>

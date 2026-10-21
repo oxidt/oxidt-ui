@@ -1,0 +1,4 @@
+/* Tailwind input for checks.html; checks.test.ts compiles it. */
+@import "tailwindcss" source(none);
+@import "../../theme/oxidt.css";
+@source "./checks.html";

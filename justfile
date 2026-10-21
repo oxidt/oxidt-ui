@@ -23,3 +23,8 @@ bench-shoot base out pages *args:
 [no-cd]
 bench-diff before after *args:
     bun {{justfile_directory()}}/bench/diff.ts {{before}} {{after}} {{args}}
+
+# Browser regression checks for the theme (set TAILWIND to a standalone CLI).
+browser-test:
+    cd bench && bun install --frozen-lockfile --silent && bunx playwright install chromium
+    cd bench && TAILWIND="{{tailwind}}" bun test

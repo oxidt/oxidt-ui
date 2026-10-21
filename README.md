@@ -139,7 +139,15 @@ compose.
 ```sh
 just check                                  # clippy + compile the components
 TAILWIND=/path/to/tailwindcss just showcase # build tests/fixture/out/showcase.html
+TAILWIND=/path/to/tailwindcss just browser-test # browser regression checks
 ```
+
+`just browser-test` compiles `bench/fixture/checks.html` with the given
+Tailwind and checks it in Chromium (`bench/checks.test.ts`): one test per bug
+fixed so far, such as checkbox ticks, dark-mode contrast, nested themes,
+popover placement and modal behaviour. CI runs it on Tailwind 4.1.18 and
+4.3.2, the versions the apps compile with. Add a fixture element and a test
+when you fix a theme bug.
 
 Check an app for visual changes before and after a CSS change: list its pages
 as `<name> <path>` lines, then from the app directory

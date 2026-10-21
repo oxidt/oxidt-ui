@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dtolnay/rust-toolchain@1.98.1
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo clippy --all-targets -- -D warnings
+      - run: cargo test
+
+  # The theme is compiled by whichever Tailwind an app uses: Topcoat's
+  # topcoat-tailwind (4.3.2) and the docs kit's Bun build (4.1.18).
+  browser:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tailwind: ["4.1.18", "4.3.2"]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+      - name: Install the standalone Tailwind CLI
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/tailwindcss" \
+            "https://github.com/tailwindlabs/tailwindcss/releases/download/v${{ matrix.tailwind }}/tailwindcss-linux-x64"
+          chmod +x "$RUNNER_TEMP/tailwindcss"
+      - name: Install Playwright
+        working-directory: bench
+        run: |
+          bun install --frozen-lockfile
+          bunx playwright install --with-deps chromium
+      - name: Browser checks
+        working-directory: bench
+        run: TAILWIND="$RUNNER_TEMP/tailwindcss" bun test

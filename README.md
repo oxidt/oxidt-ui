@@ -38,17 +38,41 @@ Overlays need no script:
 ```toml
 [dependencies]
 topcoat = { version = "=0.10.0", features = ["ui", "tailwind"] }
-oxidt-ui = { path = "../oxidt-ui" }
+oxidt-ui = { git = "https://github.com/oxidt/oxidt-ui", tag = "v0.1.1" }
+
+[build-dependencies]
+topcoat = { version = "=0.10.0", default-features = false, features = ["tailwind"] }
 ```
 
-The app's Tailwind input:
+oxidt-ui's build script hands its theme path to the app's build script as
+`DEP_OXIDT_UI_THEME`. Write a one-line import from it, then render Tailwind:
+
+```rust
+// build.rs
+fn main() {
+    let theme = std::env::var("DEP_OXIDT_UI_THEME").unwrap();
+    let import = format!("@import \"{theme}/oxidt.css\";\n");
+    // Rewriting an unchanged file would wake file watchers on every build.
+    if std::fs::read_to_string("oxidt-ui.css").ok().as_deref() != Some(import.as_str()) {
+        std::fs::write("oxidt-ui.css", import).unwrap();
+    }
+    println!("cargo::rerun-if-changed={theme}");
+    println!("cargo::rerun-if-changed=tailwind.css");
+    println!("cargo::rerun-if-changed=src");
+    topcoat::tailwind::BuildConfig::new().input("tailwind.css").render().unwrap();
+}
+```
+
+Ignore the generated `oxidt-ui.css` in git. The app's Tailwind input:
 
 ```css
 @import "tailwindcss";
 @plugin "@tailwindcss/typography"; /* bundled with the standalone CLI */
-@import "../oxidt-ui/theme/oxidt.css";
+@import "./oxidt-ui.css";
 @source "./src";
 ```
+
+To upgrade, bump the tag and run `cargo update -p oxidt-ui`.
 
 Components:
 
@@ -58,7 +82,7 @@ topcoat ui add --all --registry oxidt-ui
 ```
 
 `topcoat ui init` only installs themes from Topcoat's built-in registry, so
-the theme is imported by path as shown, not installed.
+the theme comes from the dependency as shown, not from `ui init`.
 
 ## How the CSS works
 

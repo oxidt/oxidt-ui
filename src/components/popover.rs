@@ -1,13 +1,23 @@
 use topcoat::{
     Result,
-    view::{Attributes, Child, View, class, component, view},
+    view::{AttributeValue, Attributes, Child, View, class, component, view},
 };
+
+/// `own` followed by the caller's `style` attribute, if any, so neither is lost.
+fn merge_style(own: String, theirs: Option<AttributeValue>) -> String {
+    match theirs {
+        Some(AttributeValue::StaticStr { value, .. }) => format!("{own}; {value}"),
+        Some(AttributeValue::PromotedStr { value, .. }) => format!("{own}; {}", *value),
+        Some(AttributeValue::String { value, .. }) => format!("{own}; {value}"),
+        _ => own,
+    }
+}
 
 /// A button that opens and closes the [`popover`] with the id `target`.
 ///
 /// It anchors the popover, so the panel opens under it. Pass the label as children.
-/// `attrs` are forwarded to the `<button>`, with extra classes added to its classes;
-/// style it with `btn` classes.
+/// `attrs` are forwarded to the `<button>`, with extra classes added to its classes and
+/// an extra `style` appended to its own; style it with `btn` classes.
 ///
 /// ```ignore
 /// view! {
@@ -24,7 +34,7 @@ pub async fn popover_trigger(
         <button
             type="button"
             popovertarget=(target)
-            style=(format!("anchor-name: --{target}"))
+            style=(merge_style(format!("anchor-name: --{target}"), attrs.remove("style")))
             class=(class!(attrs.remove("class")))
             (attrs)
         >
@@ -39,8 +49,9 @@ pub async fn popover_trigger(
 /// script. It opens under its trigger and flips when it would leave the screen;
 /// browsers without CSS anchor positioning centre it instead. Put a
 /// `<ul class="menu menu-sm">` inside for an action menu. `attrs` are forwarded to
-/// the `<div>`, with extra classes added to its classes; add `popover-end` to align
-/// it with the trigger's end edge or `popover-top` to open it upwards.
+/// the `<div>`, with extra classes added to its classes and an extra `style` appended
+/// to its own; add `popover-end` to align it with the trigger's end edge and
+/// `popover-top` to open it upwards (they combine).
 ///
 /// ```ignore
 /// view! {
@@ -63,7 +74,7 @@ pub async fn popover(
         <div
             id=(id)
             popover="auto"
-            style=(format!("position-anchor: --{id}"))
+            style=(merge_style(format!("position-anchor: --{id}"), attrs.remove("style")))
             class=(class!("popover", attrs.remove("class")))
             (attrs)
         >

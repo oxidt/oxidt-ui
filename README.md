@@ -22,10 +22,15 @@ on those classes.
   like, write the classes directly (`<button class="btn btn-primary">`) or keep
   an app's own wrappers.
 
-Overlays need no script:
+Overlays need no script in current browsers:
 
 - **modal:** a native `<dialog>`. `modal_trigger` opens it through invoker
-  commands (`commandfor`), `modal_close` or Escape or a backdrop click closes it.
+  commands (`commandfor`); `modal_close(target)`, Escape or a backdrop click
+  closes it. `modal_close` is a plain button, so it is safe inside a form in
+  the modal. Browsers without invoker commands (Safari before 26.2, Firefox
+  before 144, Chrome before 135) fall back to an inline `onclick` handler,
+  which a CSP that forbids inline script blocks. `modal(open: true)` shows it
+  on load as a real modal.
 - **popover:** the Popover API. `popover_trigger` toggles it, Escape and outside
   clicks close it, and CSS anchor positioning puts it under the trigger.
   Browsers without anchor positioning centre it instead.
@@ -38,7 +43,7 @@ Overlays need no script:
 ```toml
 [dependencies]
 topcoat = { version = "=0.10.0", features = ["ui", "tailwind"] }
-oxidt-ui = { git = "https://github.com/oxidt/oxidt-ui", tag = "v0.1.3" }
+oxidt-ui = { git = "https://github.com/oxidt/oxidt-ui", tag = "v0.1.4" }
 
 [build-dependencies]
 topcoat = { version = "=0.10.0", default-features = false, features = ["tailwind"] }

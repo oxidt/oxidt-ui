@@ -47,7 +47,15 @@ for (const [name, path] of pages) {
     for (const theme of ["light", "dark"]) {
         try {
             await page.emulateMedia({ colorScheme: theme as "light" | "dark" });
-            await page.goto(base + path, { waitUntil: "networkidle" });
+            const response = await page.goto(base + path, { waitUntil: "networkidle" });
+            // An error page or a redirect (say, to a login page) would look
+            // like a valid screenshot and hide the problem.
+            if (!response || response.status() >= 400) {
+                throw new Error(`HTTP ${response?.status() ?? "no response"}`);
+            }
+            if (new URL(page.url()).pathname !== new URL(base + path).pathname) {
+                throw new Error(`redirected to ${new URL(page.url()).pathname}`);
+            }
             // Pin the theme as a theme script would (attribute plus colour
             // scheme, which `light-dark()` reads) and freeze motion, so only
             // the CSS differs between runs.
@@ -55,9 +63,12 @@ for (const [name, path] of pages) {
                 document.documentElement.dataset.theme = t;
                 document.documentElement.style.colorScheme = t;
                 const style = document.createElement("style");
+                // `.loading` is an SVG mask with SMIL animation, which
+                // `animation: none` cannot stop, so hide it instead.
                 style.textContent =
-                    "*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}";
+                    "*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}.loading{visibility:hidden!important}";
                 document.head.appendChild(style);
+                for (const svg of document.querySelectorAll("svg")) svg.pauseAnimations();
             }, theme);
             await page.waitForTimeout(150);
             await page.screenshot({ path: `${out}/${name}-${theme}.png`, fullPage: true });

@@ -18,18 +18,27 @@ if (!before || !after) {
 }
 const t = rest.indexOf("--threshold");
 const THRESHOLD = t >= 0 ? Number(rest[t + 1]) : 24;
+if (!Number.isInteger(THRESHOLD) || THRESHOLD < 0 || THRESHOLD > 255) {
+    console.error(`--threshold must be an integer from 0 to 255, got ${rest[t + 1]}`);
+    process.exit(2);
+}
 const out = `${after.replace(/\/$/, "")}-diff`;
 mkdirSync(out, { recursive: true });
 
 const rows: { pct: number; name: string; note: string }[] = [];
-for (const name of readdirSync(before).filter((f) => f.endsWith(".png")).sort()) {
-    let b: PNG;
-    try {
-        b = PNG.sync.read(readFileSync(`${after}/${name}`));
-    } catch {
+const pngs = (dir: string) => readdirSync(dir).filter((f) => f.endsWith(".png"));
+const inBefore = new Set(pngs(before));
+const inAfter = new Set(pngs(after));
+for (const name of [...new Set([...inBefore, ...inAfter])].sort()) {
+    if (!inAfter.has(name)) {
         rows.push({ pct: 100, name, note: "missing in after" });
         continue;
     }
+    if (!inBefore.has(name)) {
+        rows.push({ pct: 100, name, note: "new in after" });
+        continue;
+    }
+    const b = PNG.sync.read(readFileSync(`${after}/${name}`));
     const a = PNG.sync.read(readFileSync(`${before}/${name}`));
     const width = Math.max(a.width, b.width);
     const height = Math.max(a.height, b.height);

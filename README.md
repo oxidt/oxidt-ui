@@ -38,7 +38,7 @@ Overlays need no script:
 ```toml
 [dependencies]
 topcoat = { version = "=0.10.0", features = ["ui", "tailwind"] }
-oxidt-ui = { git = "https://github.com/oxidt/oxidt-ui", tag = "v0.1.1" }
+oxidt-ui = { git = "https://github.com/oxidt/oxidt-ui", tag = "v0.1.2" }
 
 [build-dependencies]
 topcoat = { version = "=0.10.0", default-features = false, features = ["tailwind"] }

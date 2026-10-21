@@ -1,3 +1,4 @@
 target/
 tests/fixture/out/
 Cargo.lock
+bench/node_modules/

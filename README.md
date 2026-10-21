@@ -84,6 +84,41 @@ topcoat ui add --all --registry oxidt-ui
 `topcoat ui init` only installs themes from Topcoat's built-in registry, so
 the theme comes from the dependency as shown, not from `ui init`.
 
+## Brand it
+
+The theme is monochrome. Give an app its own accent, shape or fonts by
+overriding tokens after the import, in an unlayered rule so it beats both the
+light and the dark values. `light-dark()` picks a value per theme:
+
+```css
+@import "./oxidt-ui.css";
+
+:root,
+[data-theme] {
+    --color-primary: light-dark(#c2410c, #fb923c);
+    --color-primary-content: light-dark(#ffffff, #1c0a02);
+}
+```
+
+Everything that reads `primary` follows: `btn-primary`, `badge-primary`,
+`bg-primary/10`, `text-primary`, focus rings, checked toggles.
+
+| Token | Default | Drives |
+|---|---|---|
+| `--color-primary`, `--color-primary-content` | ink, paper | primary buttons, badges, links, focus |
+| `--color-secondary`, `--color-accent` (+ `-content`) | greys | the matching modifiers |
+| `--color-base-100/200/300`, `--color-base-content` | white to light grey, ink | page, raised surfaces, borders, text |
+| `--color-info/success/warning/error` (+ `-content`) | blue, green, amber, red | alerts, status badges |
+| `--radius-box` | `0.875rem` | cards, modals, alerts |
+| `--radius-field` | `0.5rem` | buttons, inputs, selects |
+| `--radius-selector` | `0.375rem` | checkboxes, toggles, badges |
+| `--font-sans`, `--font-serif`, `--font-mono` | Geist, Newsreader, system mono | body, `font-serif` headings, code |
+
+The fonts are not bundled: serve Geist and Newsreader yourself or the system
+fallbacks show. To change one component rather than a token, add utilities in
+the markup (`btn h-12 rounded-full`); they always win over the component's own
+rules.
+
 ## How the CSS works
 
 Every class is a Tailwind `@utility`. Only the classes found in the sources end
@@ -100,6 +135,21 @@ compose.
 just check                                  # clippy + compile the components
 TAILWIND=/path/to/tailwindcss just showcase # build tests/fixture/out/showcase.html
 ```
+
+Check an app for visual changes before and after a CSS change: list its pages
+as `<name> <path>` lines, then from the app directory
+
+```sh
+just -f ../oxidt-ui/justfile bench-shoot http://127.0.0.1:8080 bench/before pages.txt
+# ...switch the CSS, restart...
+just -f ../oxidt-ui/justfile bench-shoot http://127.0.0.1:8080 bench/after pages.txt
+just -f ../oxidt-ui/justfile bench-diff bench/before bench/after
+```
+
+It shoots every page in light and dark and prints the share of changed pixels
+per page, worst first, with the changed rows. An unchanged rerun shows 0.00%.
+Signed-in pages need `--storage auth.json` (record it with
+`bunx playwright codegen --save-storage=auth.json <url>`) or `--cookie name=value`.
 
 Open `tests/fixture/out/showcase.html` over HTTP (`?theme=dark` for dark).
 `topcoat-tailwind` caches the CLI at

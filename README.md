@@ -18,7 +18,7 @@ on those classes.
     `admin-shell`, `table-wrap`, `table-polished`, `empty-state`,
     `modal-polished`, `auth-bg`, `auth-card`, `btn-strong`, motion
 - `src/components/*.rs`: registry components that Topcoat's built-in registry
-  lacks: empty_state, modal, popover, toast. For buttons, cards, inputs and the
+  lacks: bar_chart, empty_state, modal, popover, radar_chart, toast. For buttons, cards, inputs and the
   like, write the classes directly (`<button class="btn btn-primary">`) or keep
   an app's own wrappers.
 
@@ -34,6 +34,11 @@ Overlays need no script in current browsers:
 - **popover:** the Popover API. `popover_trigger` toggles it, Escape and outside
   clicks close it, and CSS anchor positioning puts it under the trigger.
   Browsers without anchor positioning centre it instead.
+- **bar_chart, radar_chart:** server-rendered SVG that follows the theme
+  tokens. Bar tooltips are native `<title>`s. The radar switches comparisons
+  with radio tabs (up to 6) and shows a tooltip per axis on hover or keyboard
+  focus. A radar with 6 axes and 4 profiles is about 14 KB of HTML, 1.6 KB
+  gzipped.
 - **toast:** `toaster` holds the stack. A `toast` hides itself after 5s
   (`--toast-delay`), pauses on hover or focus, and has a close control built on
   a hidden checkbox. Error toasts stay until closed.
@@ -43,7 +48,7 @@ Overlays need no script in current browsers:
 ```toml
 [dependencies]
 topcoat = { version = "=0.10.0", features = ["ui", "tailwind"] }
-oxidt-ui = { git = "https://github.com/oxidt/oxidt-ui", tag = "v0.1.4" }
+oxidt-ui = { git = "https://github.com/oxidt/oxidt-ui", tag = "v0.1.5" }
 
 [build-dependencies]
 topcoat = { version = "=0.10.0", default-features = false, features = ["tailwind"] }

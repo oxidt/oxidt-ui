@@ -5,6 +5,9 @@
 
 version = 1
 
+[components.bar_chart]
+source = "src/components/bar_chart.rs"
+
 [components.empty_state]
 source = "src/components/empty_state.rs"
 
@@ -13,6 +16,9 @@ source = "src/components/modal.rs"
 
 [components.popover]
 source = "src/components/popover.rs"
+
+[components.radar_chart]
+source = "src/components/radar_chart.rs"
 
 [components.toast]
 source = "src/components/toast.rs"

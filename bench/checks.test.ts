@@ -227,3 +227,31 @@ test("expired toasts collapse instead of holding their place", async () => {
     // The error toast sits at the stack's edge, 0.25rem in, with no hole below.
     expect(Math.round(t.bottom - t.error.bottom)).toBe(4);
 });
+
+test("radar_chart shows only the picked comparison", async () => {
+    const shown = () =>
+        page.evaluate(() =>
+            [1, 2, 3].map((k) => getComputedStyle(document.querySelector(`#radar-wrap polygon.radar-only-${k}`)!).visibility),
+        );
+    await page.waitForTimeout(400);
+    expect(await shown()).toEqual(["visible", "hidden", "hidden"]);
+    await page.click("#radar-wrap input.radar-pick-3");
+    await page.waitForTimeout(400);
+    expect(await shown()).toEqual(["hidden", "hidden", "visible"]);
+});
+
+test("radar_chart shows an axis tooltip on keyboard focus", async () => {
+    await page.focus("#radar-wrap input.radar-pick-3");
+    await page.keyboard.press("Tab");
+    await page.waitForTimeout(300);
+    const s = await page.evaluate(() => {
+        const axis = document.activeElement as SVGGElement;
+        return {
+            isAxis: axis.classList.contains("radar-axis"),
+            label: axis.getAttribute("aria-label"),
+            tip: getComputedStyle(axis.querySelector(".radar-focus")!).opacity,
+            row: getComputedStyle(axis.querySelector(".radar-tip .radar-only-3")!).visibility,
+        };
+    });
+    expect(s).toEqual({ isAxis: true, label: "Talent pool: Lisbon 70, Berlin 88, Toronto 75, Austin 65", tip: "1", row: "visible" });
+});

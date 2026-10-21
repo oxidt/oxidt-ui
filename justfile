@@ -2,6 +2,7 @@ tailwind := env("TAILWIND", "tailwindcss")
 
 # Compile the component sources.
 check:
+    cargo fmt --all -- --check
     cargo clippy --all-targets -- -D warnings
     cargo test
 

@@ -42,7 +42,12 @@ pub async fn bar_chart(
     #[default] mut attrs: Attributes,
     #[default] child: Child<'_>,
 ) -> Result<impl View> {
-    let max = points.iter().map(|p| p.back.max(p.front)).max().unwrap_or(0).max(1) as f64;
+    let max = points
+        .iter()
+        .map(|p| p.back.max(p.front))
+        .max()
+        .unwrap_or(0)
+        .max(1) as f64;
     let slot = W / points.len().max(1) as f64;
     let width = (slot * 0.7).max(1.0);
     // A non-zero count stays visible as a 2-unit sliver.

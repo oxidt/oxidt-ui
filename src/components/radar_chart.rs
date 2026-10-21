@@ -183,7 +183,11 @@ pub async fn radar_chart(
 
 /// Whole numbers without decimals, others with one.
 fn fmt(v: f64) -> String {
-    if v.fract() == 0.0 { format!("{v:.0}") } else { format!("{v:.1}") }
+    if v.fract() == 0.0 {
+        format!("{v:.0}")
+    } else {
+        format!("{v:.1}")
+    }
 }
 
 /// A signed difference with a real minus sign; nothing for no difference.

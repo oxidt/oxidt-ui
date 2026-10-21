@@ -21,5 +21,5 @@ bench-shoot base out pages *args:
 
 # Compare two bench-shoot runs, worst page first (see bench/diff.ts).
 [no-cd]
-bench-diff before after:
-    bun {{justfile_directory()}}/bench/diff.ts {{before}} {{after}}
+bench-diff before after *args:
+    bun {{justfile_directory()}}/bench/diff.ts {{before}} {{after}} {{args}}

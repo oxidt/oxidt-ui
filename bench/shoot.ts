@@ -46,10 +46,14 @@ let failed = 0;
 for (const [name, path] of pages) {
     for (const theme of ["light", "dark"]) {
         try {
+            await page.emulateMedia({ colorScheme: theme as "light" | "dark" });
             await page.goto(base + path, { waitUntil: "networkidle" });
-            // Pin the theme and freeze motion, so only the CSS differs between runs.
+            // Pin the theme as a theme script would (attribute plus colour
+            // scheme, which `light-dark()` reads) and freeze motion, so only
+            // the CSS differs between runs.
             await page.evaluate((t) => {
                 document.documentElement.dataset.theme = t;
+                document.documentElement.style.colorScheme = t;
                 const style = document.createElement("style");
                 style.textContent =
                     "*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}";

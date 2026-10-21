@@ -1,21 +1,23 @@
 // Compare two `shoot.ts` runs pixel by pixel, worst page first.
 //
-//   bun diff.ts <before-dir> <after-dir>
+//   bun diff.ts <before-dir> <after-dir> [--threshold N]
 //
-// A pixel counts as changed when a channel differs by more than 24, which
-// ignores anti-aliasing noise. For each page it prints the changed share, any
+// A pixel counts as changed when a channel differs by more than N (default
+// 24), which ignores anti-aliasing noise; pass a low N such as 2 to see
+// deliberate colour tweaks. For each page it prints the changed share, any
 // height change and the first changed row bands (y ranges), and writes a mask
 // of the changed pixels to `<after-dir>-diff/`.
 
 import { PNG } from "pngjs";
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 
-const [before, after] = process.argv.slice(2);
+const [before, after, ...rest] = process.argv.slice(2);
 if (!before || !after) {
-    console.error("usage: bun diff.ts <before-dir> <after-dir>");
+    console.error("usage: bun diff.ts <before-dir> <after-dir> [--threshold N]");
     process.exit(2);
 }
-const THRESHOLD = 24;
+const t = rest.indexOf("--threshold");
+const THRESHOLD = t >= 0 ? Number(rest[t + 1]) : 24;
 const out = `${after.replace(/\/$/, "")}-diff`;
 mkdirSync(out, { recursive: true });
 

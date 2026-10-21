@@ -1,0 +1,18 @@
+[package]
+name = "oxidt-ui"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+description = "Oxidt's Topcoat UI registry: a monochrome theme and daisyUI-compatible components without Node"
+license = "MIT"
+repository = "https://github.com/oxidt/oxidt-ui"
+publish = false
+include = ["src/**/*", "theme/**/*", "registry.toml", "README.md", "LICENSE", "THIRD_PARTY_NOTICES.md"]
+
+# Declares this crate as a topcoat-ui component registry: `topcoat ui add
+# --registry oxidt-ui` reads `registry.toml` and the sources it names.
+[package.metadata.topcoat-ui]
+registry = "."
+
+[dev-dependencies]
+topcoat = "=0.10.0"

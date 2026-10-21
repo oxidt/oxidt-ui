@@ -1,0 +1,267 @@
+<!doctype html>
+<!-- Visual check for theme/oxidt.css. `just showcase` compiles the theme
+     against this page into tests/fixture/out/; open showcase.html there. -->
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>oxidt-ui showcase</title>
+    <link rel="stylesheet" href="oxidt.css">
+    <script>
+        const t = new URLSearchParams(location.search).get("theme");
+        if (t) document.documentElement.dataset.theme = t;
+    </script>
+</head>
+<body class="bg-base-100 text-base-content font-sans">
+<div class="drawer lg:drawer-open admin-shell">
+    <input id="nav" type="checkbox" class="drawer-toggle">
+    <div class="drawer-content">
+        <div class="navbar glass-panel border-b border-base-300 lg:hidden">
+            <label for="nav" class="btn btn-ghost btn-sm btn-square drawer-button">☰</label>
+            <span class="font-serif text-lg ml-2">Oxidt</span>
+        </div>
+        <main class="mx-auto max-w-5xl space-y-10 p-6">
+            <header>
+                <div class="breadcrumbs text-base-content/60"><ul><li><a href="#">Projects</a></li><li><a href="#">Acme</a></li><li>Overview</li></ul></div>
+                <h1 class="font-serif text-4xl">Components</h1>
+                <p class="text-base-content/60 mt-1">Every class oxidt-ui provides, in one page.</p>
+            </header>
+
+            <section class="space-y-3">
+                <h2 class="font-serif text-2xl">Buttons</h2>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button class="btn btn-primary">Primary</button>
+                    <button class="btn">Default</button>
+                    <button class="btn btn-soft">Soft</button>
+                    <button class="btn btn-outline">Outline</button>
+                    <button class="btn btn-ghost">Ghost</button>
+                    <button class="btn btn-error">Error</button>
+                    <button class="btn btn-success">Success</button>
+                    <button class="btn btn-warning">Warning</button>
+                    <button class="btn btn-neutral">Neutral</button>
+                    <button class="btn btn-link">Link</button>
+                    <button class="btn btn-primary btn-strong">Strong</button>
+                    <button class="btn btn-primary" disabled>Disabled</button>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button class="btn btn-primary btn-xs">xs</button>
+                    <button class="btn btn-primary btn-sm">sm</button>
+                    <button class="btn btn-primary">md</button>
+                    <button class="btn btn-primary btn-lg">lg</button>
+                    <button class="btn btn-outline btn-square btn-sm">+</button>
+                    <button class="btn btn-ghost btn-circle">×</button>
+                    <button class="btn btn-outline btn-error btn-sm">Outline error</button>
+                    <button class="btn btn-soft btn-error btn-sm">Soft error</button>
+                    <button class="btn btn-sm btn-active">Active</button>
+                    <span class="loading loading-sm"></span>
+                    <span class="loading"></span>
+                    <span class="loading loading-lg"></span>
+                </div>
+                <div class="join">
+                    <button class="btn btn-sm join-item">Day</button>
+                    <button class="btn btn-sm btn-primary join-item">Week</button>
+                    <button class="btn btn-sm join-item">Month</button>
+                </div>
+            </section>
+
+            <section class="space-y-3">
+                <h2 class="font-serif text-2xl">Badges &amp; status</h2>
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="badge">Default</span>
+                    <span class="badge badge-primary">Primary</span>
+                    <span class="badge badge-sm badge-soft badge-success">Live</span>
+                    <span class="badge badge-sm badge-soft badge-warning">Pending</span>
+                    <span class="badge badge-sm badge-soft badge-error">Failed</span>
+                    <span class="badge badge-sm badge-soft badge-info">Info</span>
+                    <span class="badge badge-sm badge-outline">Outline</span>
+                    <span class="badge badge-sm badge-outline badge-success">Outline ok</span>
+                    <span class="badge badge-sm badge-ghost">Ghost</span>
+                    <span class="badge badge-xs badge-primary">xs</span>
+                    <span class="badge badge-lg">lg</span>
+                    <span class="status status-success"></span>
+                    <span class="status status-warning"></span>
+                    <span class="status status-error"></span>
+                    <kbd class="kbd kbd-xs">⌘</kbd><kbd class="kbd">K</kbd>
+                </div>
+            </section>
+
+            <section class="grid gap-4 md:grid-cols-3">
+                <div class="card card-elevated bg-base-100">
+                    <div class="card-body">
+                        <h3 class="card-title">Elevated card</h3>
+                        <p class="text-base-content/60">Static, with a hairline border and soft shadow.</p>
+                        <div class="card-actions justify-end"><button class="btn btn-primary btn-sm">Open</button></div>
+                    </div>
+                </div>
+                <a href="#" class="card card-elevated bg-base-100">
+                    <div class="card-body">
+                        <p class="text-xs uppercase tracking-wide text-base-content/50">Events</p>
+                        <p class="font-serif text-3xl tabular-nums">12,408</p>
+                        <p class="text-sm text-success">+8.2%</p>
+                    </div>
+                </a>
+                <div class="card bg-base-200 card-hover">
+                    <div class="card-body">
+                        <h3 class="card-title">base-200 card <span class="badge badge-sm badge-soft badge-success">new</span></h3>
+                        <p class="text-base-content/60">Opts into the hover lift.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="space-y-3">
+                <h2 class="font-serif text-2xl">Alerts</h2>
+                <div role="status" class="alert">A neutral notice.</div>
+                <div role="status" class="alert alert-soft alert-success">Saved.</div>
+                <div role="alert" class="alert alert-soft alert-error">The last deploy did not finish.</div>
+                <div role="alert" class="alert alert-warning">Solid warning.</div>
+                <div role="status" class="alert alert-info">Solid info.</div>
+            </section>
+
+            <section class="space-y-3">
+                <h2 class="font-serif text-2xl">Form</h2>
+                <form class="card card-elevated bg-base-100 max-w-lg">
+                    <div class="card-body gap-4">
+                        <fieldset class="fieldset">
+                            <legend class="fieldset-legend">Name</legend>
+                            <input class="input input-bordered w-full" placeholder="Acme Inc.">
+                            <p class="fieldset-label">Shown on invoices.</p>
+                        </fieldset>
+                        <fieldset class="fieldset">
+                            <legend class="fieldset-legend">Email</legend>
+                            <input class="input w-full input-error" aria-invalid="true" value="not-an-email">
+                        </fieldset>
+                        <fieldset class="fieldset">
+                            <legend class="fieldset-legend">Plan</legend>
+                            <select class="select select-bordered w-full"><option>Free</option><option>Pro</option></select>
+                        </fieldset>
+                        <fieldset class="fieldset">
+                            <legend class="fieldset-legend">Notes</legend>
+                            <textarea class="textarea textarea-bordered w-full" placeholder="Tell us more"></textarea>
+                        </fieldset>
+                        <input type="file" class="file-input file-input-bordered w-full">
+                        <div class="flex flex-wrap items-center gap-4">
+                            <label class="label"><input type="checkbox" class="checkbox checkbox-sm" checked> Checked</label>
+                            <label class="label"><input type="checkbox" class="checkbox checkbox-sm"> Unchecked</label>
+                            <label class="label"><input type="radio" name="r" class="radio radio-sm" checked> One</label>
+                            <label class="label"><input type="radio" name="r" class="radio radio-sm"> Two</label>
+                            <label class="label"><input type="checkbox" role="switch" class="toggle toggle-sm" checked> On</label>
+                            <label class="label"><input type="checkbox" role="switch" class="toggle toggle-sm toggle-success" checked> Live</label>
+                            <label class="label"><input type="checkbox" role="switch" class="toggle toggle-sm"> Off</label>
+                        </div>
+                        <div class="join w-full">
+                            <input class="input input-sm join-item w-full" placeholder="Search">
+                            <button class="btn btn-sm btn-primary join-item">Go</button>
+                        </div>
+                        <progress class="progress" value="60" max="100"></progress>
+                        <div class="divider">or</div>
+                        <div class="card-actions justify-end">
+                            <button type="button" class="btn btn-ghost" commandfor="m" command="show-modal">Open modal</button>
+                            <button class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <section class="space-y-3">
+                <h2 class="font-serif text-2xl">Tabs, menu, dropdown</h2>
+                <div role="tablist" class="tabs tabs-border">
+                    <a role="tab" class="tab tab-active">Overview</a><a role="tab" class="tab">Events</a><a role="tab" class="tab">Settings</a>
+                </div>
+                <div role="tablist" class="tabs tabs-box w-fit">
+                    <a role="tab" class="tab">Day</a><a role="tab" class="tab tab-active">Week</a><a role="tab" class="tab">Month</a>
+                </div>
+                <div role="tablist" class="tabs tabs-border">
+                    <input type="radio" name="rt" class="tab" aria-label="Radio A" checked>
+                    <div class="tab-content p-4">Panel A</div>
+                    <input type="radio" name="rt" class="tab" aria-label="Radio B">
+                    <div class="tab-content p-4">Panel B</div>
+                </div>
+                <div class="flex items-start gap-6">
+                    <ul class="menu w-56 rounded-box bg-base-200">
+                        <li class="menu-title">Project</li>
+                        <li><a class="menu-active">Overview</a></li>
+                        <li><a>Events</a></li>
+                        <li><details open><summary>Settings</summary><ul><li><a>General</a></li><li><a>Members</a></li></ul></details></li>
+                    </ul>
+                    <button type="button" popovertarget="pop" style="anchor-name: --pop" class="btn btn-sm btn-outline">Popover ▾</button>
+                    <div id="pop" popover="auto" style="position-anchor: --pop" class="popover">
+                        <ul class="menu menu-sm p-0"><li><a>Settings</a></li><li><a>Members</a></li><li><a class="text-error">Delete</a></li></ul>
+                    </div>
+                    <div class="dropdown dropdown-end dropdown-open">
+                        <div tabindex="0" role="button" class="btn btn-sm btn-outline">Dropdown ▾</div>
+                        <ul tabindex="0" class="dropdown-content menu menu-sm w-44 rounded-box border border-base-300 bg-base-100 shadow-lg">
+                            <li><a>Profile</a></li><li><a>Theme</a></li><li><a>Log out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="space-y-3">
+                <h2 class="font-serif text-2xl">Table</h2>
+                <div class="table-wrap overflow-x-auto">
+                    <table class="table table-polished table-sm">
+                        <thead><tr><th>Event</th><th>Visitors</th><th>Status</th></tr></thead>
+                        <tbody>
+                            <tr><td>signup</td><td class="tabular-nums">1,204</td><td><span class="badge badge-sm badge-soft badge-success">ok</span></td></tr>
+                            <tr><td>checkout</td><td class="tabular-nums">318</td><td><span class="badge badge-sm badge-soft badge-warning">slow</span></td></tr>
+                            <tr><td>refund</td><td class="tabular-nums">12</td><td><span class="badge badge-sm badge-soft badge-error">error</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="grid gap-4 md:grid-cols-2">
+                <div class="empty-state flex flex-col items-center gap-3 px-6 py-12 text-center">
+                    <h3 class="font-serif text-xl">No projects yet</h3>
+                    <p class="text-sm text-base-content/60">Create one to start collecting events.</p>
+                    <button class="btn btn-primary btn-sm">New project</button>
+                </div>
+                <div class="space-y-3">
+                    <div class="collapse collapse-arrow bg-base-200">
+                        <input type="checkbox" checked>
+                        <div class="collapse-title font-medium">Collapse (open)</div>
+                        <div class="collapse-content text-sm text-base-content/60">Hidden content, now visible.</div>
+                    </div>
+                    <div class="skeleton h-6 w-3/4"></div>
+                    <div class="skeleton h-6 w-1/2"></div>
+                    <div class="auth-bg rounded-box p-6"><div class="auth-card rounded-box p-4 text-sm">auth-card on auth-bg</div></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div class="drawer-side">
+        <label for="nav" class="drawer-overlay"></label>
+        <aside class="flex min-h-full w-64 flex-col gap-1 border-r border-base-300 p-4">
+            <span class="font-serif text-xl px-3 pb-4">Oxidt</span>
+            <a class="nav-link flex items-center active">Overview</a>
+            <a class="nav-link flex items-center">Analytics</a>
+            <a class="nav-link flex items-center">Errors</a>
+            <a class="nav-link flex items-center">Settings</a>
+        </aside>
+    </div>
+</div>
+
+<dialog id="m" class="modal">
+    <div class="modal-box modal-polished">
+        <h3 class="font-serif text-xl">Delete project?</h3>
+        <p class="py-2 text-sm text-base-content/60">This cannot be undone.</p>
+        <div class="modal-action">
+            <form method="dialog" class="contents"><button class="btn btn-ghost">Cancel</button></form>
+            <button class="btn btn-error">Delete</button>
+        </div>
+    </div>
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+</dialog>
+
+<div class="toast toast-end z-50">
+    <div role="status" class="alert alert-soft max-w-md shadow-lg alert-success toast-auto" style="--toast-delay: 3s">
+        <span>Saved (hides after 3s)</span>
+        <label class="toast-close" aria-label="Dismiss"><input type="checkbox" class="sr-only"><span aria-hidden="true">×</span></label>
+    </div>
+    <div role="alert" class="alert alert-soft max-w-md shadow-lg alert-error toast-enter">
+        <span>Could not save the project.</span>
+        <label class="toast-close" aria-label="Dismiss"><input type="checkbox" class="sr-only"><span aria-hidden="true">×</span></label>
+    </div>
+</div>
+</body>
+</html>

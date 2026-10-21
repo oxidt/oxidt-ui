@@ -1,0 +1,18 @@
+# The oxidt-ui component registry. `topcoat ui add <name> --registry oxidt-ui`
+# copies a component into the app. The theme is not installed by the CLI
+# (topcoat-ui only installs themes from its built-in registry); import
+# theme/oxidt.css from the app's Tailwind input instead.
+
+version = 1
+
+[components.empty_state]
+source = "src/components/empty_state.rs"
+
+[components.modal]
+source = "src/components/modal.rs"
+
+[components.popover]
+source = "src/components/popover.rs"
+
+[components.toast]
+source = "src/components/toast.rs"

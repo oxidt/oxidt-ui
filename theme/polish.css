@@ -17,6 +17,16 @@
         transition-duration: 0.15s;
         transition-timing-function: ease;
     }
+
+    /* Even heading lines, and no single word left alone on a paragraph's
+       last line. */
+    :is(h1, h2, h3, h4, h5, h6) {
+        text-wrap: balance;
+    }
+
+    :is(p, li, dd, figcaption, blockquote) {
+        text-wrap: pretty;
+    }
 }
 
 @utility font-serif {
@@ -158,7 +168,7 @@
 /* ── Empty state ── */
 
 @utility empty-state {
-    border-radius: 1.5rem;
+    border-radius: var(--radius-box);
     border: 1px dashed color-mix(in srgb, var(--color-base-300) 70%, transparent);
     background: var(--color-base-200);
 }

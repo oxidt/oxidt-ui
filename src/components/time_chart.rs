@@ -364,13 +364,20 @@ fn path(points: &[(f64, f64)], segments: &[String]) -> String {
     }
 }
 
-/// A compact count for the y-axis: 950, 1.2k, 36k, 1.5M.
+/// A compact count for the y-axis, at most four characters so it fits beside
+/// the plot: 950, 1.2k, 36k, 1.5M, 250M, 7.5B.
 fn fmt_count(n: i64) -> String {
-    match n {
-        n if n >= 1_000_000 => format!("{:.1}M", n as f64 / 1_000_000.0),
-        n if n >= 10_000 => format!("{:.0}k", n as f64 / 1_000.0),
-        n if n >= 1_000 => format!("{:.1}k", n as f64 / 1_000.0),
-        n => n.to_string(),
+    let (value, unit) = match n {
+        n if n >= 1_000_000_000 => (n as f64 / 1e9, "B"),
+        n if n >= 1_000_000 => (n as f64 / 1e6, "M"),
+        n if n >= 1_000 => (n as f64 / 1e3, "k"),
+        n => return n.to_string(),
+    };
+    // 9.96 would print as "10.0", so switch to whole numbers just below 10.
+    if value >= 9.95 {
+        format!("{value:.0}{unit}")
+    } else {
+        format!("{value:.1}{unit}")
     }
 }
 
@@ -414,5 +421,10 @@ mod tests {
         assert_eq!(fmt_int(999), "999");
         assert_eq!(fmt_count(1_460), "1.5k");
         assert_eq!(fmt_count(36_686), "37k");
+        assert_eq!(fmt_count(2_500_000), "2.5M");
+        assert_eq!(fmt_count(250_000_000), "250M");
+        assert_eq!(fmt_count(7_500_000_000), "7.5B");
+        assert_eq!(fmt_count(75_000_000_000), "75B");
+        assert_eq!(fmt_count(9_960_000), "10M");
     }
 }

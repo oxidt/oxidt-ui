@@ -296,6 +296,11 @@
         color: var(--badge-fg, var(--badge-content, var(--color-base-content)));
         font-size: var(--badge-fs, 0.875rem);
         white-space: nowrap;
+        /* Never wider than its container; wrap long text in a `truncate`
+           span for an ellipsis. */
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
         vertical-align: middle;
         transition: transform 0.2s ease;
     }
@@ -856,6 +861,7 @@
         border-spacing: 0;
         border-radius: var(--radius-box);
         font-size: 0.875rem;
+        font-variant-numeric: tabular-nums;
         text-align: start;
 
         & :where(th, td) {

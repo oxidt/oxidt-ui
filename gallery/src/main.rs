@@ -11,13 +11,27 @@ use topcoat::{
     view::{View, component, view},
 };
 
+mod edge_cases;
+#[allow(dead_code)]
+#[path = "../../src/components/empty_state.rs"]
+mod empty;
+#[allow(dead_code)]
+#[path = "../../src/components/modal.rs"]
+mod modal;
+#[allow(dead_code)]
+#[path = "../../src/components/popover.rs"]
+mod popover;
 #[allow(dead_code)]
 #[path = "../../src/components/radar_chart.rs"]
 mod radar;
 #[allow(dead_code)]
 #[path = "../../src/components/time_chart.rs"]
 mod timeline;
+#[allow(dead_code)]
+#[path = "../../src/components/toast.rs"]
+mod toast;
 
+use edge_cases::states;
 use radar::{RadarSeries, radar_chart};
 use timeline::{ChartPoint, ChartStyle, time_chart};
 
@@ -59,6 +73,19 @@ async fn home() -> Result<impl View> {
                 >
                     themed(theme: "light")
                     themed(theme: "dark")
+                </main>
+                <header class="px-6 py-8 max-w-7xl mx-auto">
+                    <h2 class="font-serif text-3xl">"States"</h2>
+                    <p class="text-base-content/60 mt-2 max-w-2xl">
+                        "Every component when the data is awkward: empty, huge, long, "
+                        "disabled or loading."
+                    </p>
+                </header>
+                <main
+                    class="grid lg:grid-cols-2 gap-px bg-base-300 border-y border-base-300"
+                >
+                    states(theme: "light")
+                    states(theme: "dark")
                 </main>
             </body>
         </html>
@@ -150,7 +177,7 @@ async fn themed(theme: &str) -> Result<impl View> {
 
 /// A titled card around one example.
 #[component]
-async fn demo(title: &str, note: &str, child: topcoat::view::Child<'_>) -> Result<impl View> {
+pub async fn demo(title: &str, note: &str, child: topcoat::view::Child<'_>) -> Result<impl View> {
     Ok(view! {
         <div class="card card-elevated bg-base-100">
             <div class="card-body p-5">

@@ -10,8 +10,8 @@ description = "A local page that renders oxidt-ui's components with sample data"
 [workspace]
 
 [dependencies]
-topcoat = { version = "=0.10.0", features = ["tailwind"] }
+topcoat = { version = "=0.11.0", features = ["tailwind"] }
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 
 [build-dependencies]
-topcoat = { version = "=0.10.0", default-features = false, features = ["tailwind"] }
+topcoat = { version = "=0.11.0", default-features = false, features = ["tailwind"] }

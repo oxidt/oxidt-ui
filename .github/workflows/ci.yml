@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: dtolnay/rust-toolchain@1.98.1
+      - uses: dtolnay/rust-toolchain@1.99.0
         with:
           components: clippy, rustfmt
       - uses: Swatinem/rust-cache@v2
       # Apps format with `topcoat fmt`, which also formats `view!` markup, so
       # the components must pass it or an app's own check fails.
-      - run: cargo install topcoat-cli --version 0.10.0 --locked
+      - run: cargo install topcoat-cli --version 0.11.0 --locked
       - run: topcoat fmt --check --rustfmt src gallery/src
       - run: cargo clippy --all-targets -- -D warnings
       - run: cargo test

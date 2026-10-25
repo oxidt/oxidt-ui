@@ -16,4 +16,4 @@ include = ["build.rs", "src/**/*", "theme/**/*", "registry.toml", "README.md", "
 registry = "."
 
 [dev-dependencies]
-topcoat = "=0.10.0"
+topcoat = "=0.11.0"

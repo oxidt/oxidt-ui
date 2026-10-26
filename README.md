@@ -10,7 +10,8 @@ on those classes.
     `primary-content`…), light and `[data-theme="dark"]`
   - `components.css`: `btn`, `card`, `badge`, `input`, `select`, `textarea`,
     `checkbox`, `radio`, `toggle`, `table`, `join`, `alert`, `tabs`,
-    `dropdown`, `menu`, `modal`, `drawer`, `loading`, `progress`, `divider`,
+    `dropdown`, `menu`, `modal`, `drawer` (with `is-drawer-open:` and
+    `is-drawer-close:` variants), `loading`, `progress`, `divider`,
     `navbar`, `hero`, `footer`, `collapse`, `toast`, `status`, `link`, `kbd`,
     `breadcrumbs`, `skeleton`, `popover`, `toast-auto`/`toast-close` and
     their modifiers
@@ -43,6 +44,10 @@ Overlays need no script in current browsers:
 - **toast:** `toaster` holds the stack. A `toast` hides itself after 5s
   (`--toast-delay`), pauses on hover or focus, and has a close control built on
   a hidden checkbox. Error toasts stay until closed.
+- **drawer icon rail:** daisyUI's `is-drawer-close:`/`is-drawer-open:`
+  variants. Under `lg:drawer-open`, `is-drawer-close:w-16 is-drawer-open:w-64`
+  on the `aside` and `is-drawer-close:hidden` on labels make the sidebar an
+  icon rail that the drawer toggle expands.
 
 ## Use it in an app
 

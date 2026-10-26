@@ -180,6 +180,19 @@ test("join-vertical lg:join-horizontal is horizontal at lg", async () => {
     expect(items[2].radii[2]).not.toBe("0px");
 });
 
+test("is-drawer-close and is-drawer-open follow the drawer toggle", async () => {
+    const state = () =>
+        page.evaluate(() => ({
+            width: document.getElementById("rail-aside")!.getBoundingClientRect().width,
+            brand: getComputedStyle(document.getElementById("rail-brand")!).display,
+            overflow: getComputedStyle(document.getElementById("rail-side")!).overflowX,
+        }));
+    expect(await state()).toEqual({ width: 64, brand: "none", overflow: "visible" });
+    await page.$eval("#rail-toggle", (e) => ((e as HTMLInputElement).checked = true));
+    expect(await state()).toEqual({ width: 256, brand: "inline", overflow: "hidden" });
+    await page.$eval("#rail-toggle", (e) => ((e as HTMLInputElement).checked = false));
+});
+
 test("a checkbox-driven collapse shows keyboard focus", async () => {
     await page.focus("#collapse-input");
     await page.keyboard.press("Shift+Tab");

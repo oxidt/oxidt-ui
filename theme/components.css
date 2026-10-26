@@ -1481,12 +1481,19 @@
     }
 }
 @utility drawer-open {
+    /* Layered so `is-drawer-close:overflow-visible` can let an icon rail's
+       dropdowns out. */
+    @layer oxidt {
+        & > .drawer-side {
+            overflow-y: auto;
+            overscroll-behavior: auto;
+        }
+    }
+
     & > .drawer-side {
         position: sticky;
         display: block;
         width: auto;
-        overflow-y: auto;
-        overscroll-behavior: auto;
         pointer-events: auto;
         visibility: visible;
     }
@@ -1501,6 +1508,10 @@
         cursor: default;
     }
 }
+/* daisyUI's drawer state variants, for a sidebar that collapses to icons under
+   drawer-open: `is-drawer-close:w-16 is-drawer-open:w-64`. */
+@custom-variant is-drawer-close (&:where(.drawer-toggle:not(:checked) ~ .drawer-side, .drawer-toggle:not(:checked) ~ .drawer-side *));
+@custom-variant is-drawer-open (&:where(.drawer-toggle:checked ~ .drawer-side, .drawer-toggle:checked ~ .drawer-side *));
 
 /* ── Loading ── */
 
